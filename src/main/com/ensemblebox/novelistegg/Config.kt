@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 
-
 class Config {
 
     private var autoContentsUpdate = false
@@ -19,26 +18,107 @@ class Config {
     private var fullScreen = false
     private var offlineMode = false
     private var style = "default"
-    private var width = 1920
-    private var height = 1080
+    private var width :Double = 1920.0
+    private var height :Double = 1080.0
 
     private val mapper = ObjectMapper()
+    private val node :JsonNode = mapper.readTree(File("Config.json"))
+
+    public fun getAutoContentsUpdate() :Boolean {
+
+        return this.autoContentsUpdate
+
+    }
+
+    public fun setAutoContentsUpdate(bool: Boolean) {
+
+        this.autoContentsUpdate = bool
+
+    }
+
+    public fun getAutoContentsListImport() :Boolean {
+
+        return this.autoContentsListImport
+
+    }
+
+    public fun setAutoContentsListImport(bool: Boolean) {
+
+        this.autoContentsListImport = bool
+
+    }
+
+    public fun getFullScreen() :Boolean {
+
+        return this.fullScreen
+
+    }
+
+    public fun setFullScreen(bool :Boolean) {
+
+        this.fullScreen = bool
+
+    }
+
+    public fun getOfflineMode() :Boolean {
+
+        return this.offlineMode
+
+    }
+
+    public fun setOfflineMode(bool :Boolean) {
+
+        this.fullScreen = bool
+
+    }
+
+    public fun getStyle() :String {
+
+        return this.style
+
+    }
+
+    public fun setStyle(style :String) {
+
+        this.style = style
+
+    }
+
+    public fun getWidth() :Double {
+
+        return this.width
+
+    }
+
+    public fun setWidth(width :Double) {
+
+        this.width = width
+
+    }
+
+    public fun getHeight() :Double {
+
+        return this.height
+
+    }
+
+    public fun setHeight(height :Double) {
+
+        this.height = height
+
+    }
 
     //Config.jsonから設定を読みだす
-
     public fun ConfigLoad() {
 
         try {
-
-            val node :JsonNode = mapper.readTree(File("Config.json"))
-
-            autoContentsUpdate = node.get("autoContentsUpdate").asBoolean()
-            autoContentsListImport = node.get("autoContentsListImport").asBoolean()
-            fullScreen = node.get("fullScreen").asBoolean()
-            offlineMode = node.get("offLineMode").asBoolean()
-            style = node.get("style").toString()
-            width = node.get("width").asInt()
-            height = node.get("height").asInt()
+            this.autoContentsUpdate = node.get("autoContentsUpdate").asBoolean()
+            this.autoContentsListImport = node.get("autoContentsListImport").asBoolean()
+            this.fullScreen = node.get("fullScreen").asBoolean()
+            this.offlineMode = node.get("offLineMode").asBoolean()
+            this.style = node.get("style").toString()
+            this.width = node.get("width").asDouble()
+            this.height = node.get("height").asDouble()
 
         } catch (e: IOException) {
             e.printStackTrace()
@@ -50,14 +130,13 @@ class Config {
         mapper.enable(SerializationFeature.INDENT_OUTPUT)
 
         try {
+            val default = mapper.writeValueAsString(Config())
 
-            val defaultConfig = mapper.writeValueAsString(Config())
-            FileEdit().overWriteFile("Config.json", defaultConfig)
-        
+            FileEdit().overWriteFile("Config.json", default)
+
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
     }
 
 }
