@@ -13,9 +13,44 @@ import java.io.IOException
 import java.io.BufferedReader
 import java.io.BufferedWriter
 
-class FileEdit{
+class FileEdit {
 
     private val SEPARATE = System.getProperty("line.separator")
+
+    //起動時に必要なファイルの存在チェック。ない場合は作成する。
+    public fun BootFileConfirm() {
+
+        if(!fileExists("Contents")) {
+
+            createFolder("Contents")
+
+        }
+
+        if(!fileExists("AdditionalContentURL.json")) {
+
+            createFile("AdditionalContentURL.json")
+
+        }
+
+        if(!fileExists("Config.json")) {
+
+            createFile("Config.json")
+            Config().ConfigInitialize()
+
+        }
+
+        if(!fileExists("Contents.json")) {
+
+            createFile("Contents.json")
+
+        }
+
+        if(!fileExists("index.json")) {
+
+            createFile("index.json")
+
+        }
+    }
 
     public fun fileExists(filePath: String) :Boolean {
 
@@ -26,17 +61,17 @@ class FileEdit{
         }
         return false
     }
-    
-    public fun createFile(filePath: String, fileName: String) {
 
-        val file = File(filePath, fileName)
+    public fun createFolder(filePath: String) {
 
-        file.createNewFile()
+        val folder = File(filePath)
+
+        folder.mkdir()
     }
 
-    public fun createFile(filePath: String, fileName: String, extension: String) {
+    public fun createFile(fileName: String, filePath: String = "") {
 
-        val file = File(filePath, fileName + extension)
+        val file = File(filePath, fileName)
 
         file.createNewFile()
     }
