@@ -17,66 +17,31 @@ class FileEdit {
 
     private val SEPARATE = System.getProperty("line.separator")
 
-    //起動時に必要なファイルの存在チェック。ない場合は作成する。
-    public fun BootFileConfirm() {
-
-        if(!fileExists("Contents")) {
-
-            createFolder("Contents")
-
-        }
-
-        if(!fileExists("AdditionalContentURL.json")) {
-
-            createFile("AdditionalContentURL.json")
-
-        }
-
-        if(!fileExists("Config.json")) {
-
-            createFile("Config.json")
-            Config().ConfigInitialize()
-
-        }
-
-        if(!fileExists("Contents.json")) {
-
-            createFile("Contents.json")
-
-        }
-
-        if(!fileExists("index.json")) {
-
-            createFile("index.json")
-
-        }
-    }
-
-    public fun fileExists(filePath: String) :Boolean {
-
-        val file = File(filePath)
-
-        if (file.exists()) {
-            return true
-        }
-        return false
-    }
-
-    public fun createFolder(filePath: String) {
+    fun createFolder(filePath: String) {
 
         val folder = File(filePath)
 
-        folder.mkdir()
+        try {
+            folder.mkdir()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    public fun createFile(fileName: String, filePath: String = "") {
+    fun createFile(fileName: String, filePath: String = "") {
 
         val file = File(filePath, fileName)
 
-        file.createNewFile()
+        try {
+            file.createNewFile()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    public fun overWriteFile(filePath: String, contents: StringBuilder) {
+    fun overWriteFile(filePath: String, contents: String) {
 
         try {
             val file = FileWriter(filePath)
@@ -90,7 +55,7 @@ class FileEdit {
         }
     }
 
-    public fun addWriteFile(filePath: String, contents: StringBuilder) {
+    fun addWriteFile(filePath: String, contents: String) {
 
         try {
             val file = FileWriter(filePath, true)
@@ -104,17 +69,21 @@ class FileEdit {
         }
     }
 
-    public fun readFile(filePath: String) :StringBuilder {
+    fun readFile(filePath: String) :StringBuilder {
 
         val fileContents = StringBuilder()
 
         try {
-            val file = File(filePath)
-            val fr = FileReader(file)
-            val br = BufferedReader(fr)
+            val br =
+                    BufferedReader(
+                            FileReader(
+                                    File(filePath)
+                            )
+                    )
 
             for (line in br.lines()) {
-                fileContents.append(line)
+                fileContents
+                        .append(line)
                         .append(SEPARATE)
             }
 
