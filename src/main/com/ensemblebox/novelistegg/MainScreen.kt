@@ -10,21 +10,23 @@ import javafx.stage.Stage
  * Created by ArcenCiel on 2018/04/02.
  */
 
-public class MainScreen: Application() {
+class MainScreen: Application() {
 
     val conf = Config()
 
     override fun start(primaryStage: Stage?) {
 
-        primaryStage?.title = "Hello World"
+        //スプラッシュ画面で本で卵を潰すアニメーションを作る
+        primaryStage?.title = "小説家のたまご"
         primaryStage?.scene =
                 Scene(
                         FXMLLoader.load<Parent>(
                                 this.javaClass.getResource(
                                         "MainScreen.fxml")
                         ),
-                        conf.getWidth(),
-                        conf.getHeight()
+                        conf.width,
+                        conf.height,
+                        conf.fullScreen
                 )
         primaryStage?.show()
     }
@@ -33,13 +35,8 @@ public class MainScreen: Application() {
 
 fun main(args: Array<String>) {
 
-    FileEdit().BootFileConfirm()
-
-    val conf = Config()
-
-    conf.ConfigInitialize()
-    conf.ConfigLoad()
+    FileCheck().bootFileConfirm()
+    FileCheck().addtionalUrlConfirm()
 
     Application.launch(MainScreen::class.java, *args)
-    println("Hello Kotlin")
 }
