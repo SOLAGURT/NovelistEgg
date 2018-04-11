@@ -12,7 +12,7 @@ import javafx.stage.Stage
 
 class MainScreen: Application() {
 
-    val conf = Config()
+    val conf  = Config().get()
 
     override fun start(primaryStage: Stage?) {
 
@@ -22,12 +22,12 @@ class MainScreen: Application() {
                 Scene(
                         FXMLLoader.load<Parent>(
                                 this.javaClass.getResource(
-                                        "MainScreen.fxml")
+                                        "/resources/MainScreen.fxml")
                         ),
                         conf.width,
-                        conf.height,
-                        conf.fullScreen
+                        conf.height
                 )
+        primaryStage?.setFullScreen(conf.fullScreen)
         primaryStage?.show()
     }
 

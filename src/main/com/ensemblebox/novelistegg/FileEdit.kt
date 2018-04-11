@@ -69,7 +69,7 @@ class FileEdit {
         }
     }
 
-    fun readFile(filePath: String) :StringBuilder {
+    fun readFile(filePath: String) :String {
 
         val fileContents = StringBuilder()
 
@@ -93,7 +93,7 @@ class FileEdit {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        return fileContents
+        return fileContents.toString()
     }
 
 }

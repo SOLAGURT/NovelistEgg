@@ -17,7 +17,7 @@ class FileCheck {
     fun bootFileConfirm() {
 
         val bootFileNameString =
-                getFilenameList(NOVELIST_EGG_DIRECTRY).toString()
+                getFilenameList(NOVELIST_EGG_DIRECTRY)
 
         if (!stringRegexFind(bootFileNameString, ".*Contents")) {
             fileEdit.createFolder("Contents")
@@ -55,7 +55,7 @@ class FileCheck {
                 .find()
     }
 
-    fun getFilenameList(filePath: String) :StringBuilder {
+    fun getFilenameList(filePath: String) :String {
 
         val dir = File(filePath)
         val files = dir.listFiles()
@@ -70,7 +70,7 @@ class FileCheck {
                     .append(fileName)
                     .append(SEPARATE)
         }
-        return fileNameBuilder
+        return fileNameBuilder.toString()
     }
 
     fun fileExists(filePath: String) :Boolean {
