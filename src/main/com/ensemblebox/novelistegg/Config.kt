@@ -8,22 +8,25 @@ import com.fasterxml.jackson.databind.ObjectMapper
 
 data class Config (
 
-    val autoContentsUpdate: Boolean = false,
-    val autoContentsListImport: Boolean = false,
-    val fullScreen: Boolean = false,
-    val offlineMode: Boolean = false,
-    val style: String = "default",
-    val width: Double = 1920.0,
-    val height: Double = 1080.0
+    var autoContentsUpdate: Boolean = false,
+    var autoContentsListImport: Boolean = false,
+    var fullScreen: Boolean = false,
+    var offlineMode: Boolean = false,
+    var style: String = "default",
+    var width: Double = 1920.0,
+    var height: Double = 1080.0
 
 ) {
     companion object {
-        var config: Config = Config().configLoad("../NovelistEgg/Config.json")
+
+        var config: Config =
+                Config().configLoad("../NovelistEgg/Config.json")
+
     }
 
     fun configLoad(filePath: String) :Config {
 
-        val READ_JSON = FileEdit().readFile("../NovelistEgg/Config.json")
+        val READ_JSON = FileEdit().readFile(filePath)
         var config: Config? = null
 
         try {
@@ -35,7 +38,7 @@ data class Config (
         return config!!
     }
 
-    fun get():Config {
+    fun get() :Config {
         return config
     }
 }
