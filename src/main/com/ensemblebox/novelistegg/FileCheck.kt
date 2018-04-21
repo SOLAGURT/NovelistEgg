@@ -1,6 +1,5 @@
 package main.com.ensemblebox.novelistegg
 
-import com.intellij.icons.AllIcons
 import java.io.File
 import java.util.regex.Pattern
 
@@ -17,17 +16,17 @@ class FileCheck {
     fun bootFileConfirm() {
 
         val bootFileNameString =
-                getFilenameList(NOVELIST_EGG_DIRECTRY)
+                getFileNameList(NOVELIST_EGG_DIRECTRY)
 
         if (!stringRegexFind(bootFileNameString, ".*Contents")) {
             fileEdit.createFolder("Contents")
         }
-
-        if (!stringRegexFind(bootFileNameString, ".*AdditionalContentURL")) {
-            fileEdit.createFile("AdditionalContentURL.json", NOVELIST_EGG_DIRECTRY)
-            JsonEdit("../NovelistEgg/AdditionalContentURL.json", "other")
+/*
+        if (!stringRegexFind(bootFileNameString, ".*AdditionalContentsURL")) {
+            fileEdit.createFile("AdditionalContentsURL.json", NOVELIST_EGG_DIRECTRY)
+            JsonEdit("../NovelistEgg/AdditionalContentsURL.json", "additionalUrlList")
         }
-
+*/  
         if (!stringRegexFind(bootFileNameString, ".*Config")) {
             fileEdit.createFile("Config.json", NOVELIST_EGG_DIRECTRY)
             JsonEdit("../NovelistEgg/Config.json", "config")
@@ -45,7 +44,7 @@ class FileCheck {
     }
 
     fun addtionalUrlConfirm() {
-
+        val additionalContentURL = AdditionalContentsURL().get()
     }
 
     fun stringRegexFind(str: String, rgx: String) :Boolean {
@@ -55,7 +54,21 @@ class FileCheck {
                 .find()
     }
 
-    fun getFilenameList(filePath: String) :String {
+    fun isAddressFormatCorrect(address: String) :Boolean {
+
+        val NAROU = "https://ncode.syosetu.com/n[0-9]{4}[a-z]{2}/$"
+        val ALPHAPOLIS = "https://www.alphapolis.co.jp/novel/[0-9]{9}/[0-9]{9}$"
+        val KAKUYOMU = "https://kakuyomu.jp/works/[0-9]{19}"
+        val R18_NOVEL = "https://novel18.syosetu.com/n[0-9]{4}[a-z]{2}/$"
+
+        if(stringRegexFind(address, NAROU)) return true
+        if(stringRegexFind(address, ALPHAPOLIS)) return true
+        if(stringRegexFind(address, KAKUYOMU)) return true
+        if(stringRegexFind(address, R18_NOVEL)) return true
+        return false
+    }
+
+    fun getFileNameList(filePath: String) :String {
 
         val dir = File(filePath)
         val files = dir.listFiles()
@@ -82,4 +95,8 @@ class FileCheck {
         }
         return false
     }
+
+    //ハッシュ関数生成処理
+
+    //比較処理
 }
