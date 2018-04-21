@@ -10,7 +10,7 @@ import java.io.PrintWriter
 class JsonEdit(filePath: String) {
 
     val FILEPATH: String = filePath
-    val JsonGenerator =
+    val JSON_GENERATOR =
             JsonFactory()
                     .createJsonGenerator(
                             PrintWriter(filePath)
@@ -27,6 +27,11 @@ class JsonEdit(filePath: String) {
            "config" -> {
                configInitialize()
            }
+            
+            "additionalUrlList" -> {
+                additionalUrlListInitialize()    
+            }
+            
             else -> {
                 otherInitialize()
             }
@@ -37,24 +42,31 @@ class JsonEdit(filePath: String) {
     fun configInitialize() {
 
         //インデント処理をくわえる
-        JsonGenerator.writeStartObject()
-        JsonGenerator.writeBooleanField("autoContentsUpdate",false)
-        JsonGenerator.writeBooleanField("autoContentsListImport",false)
-        JsonGenerator.writeBooleanField("fullScreen",false)
-        JsonGenerator.writeBooleanField("offlineMode",false)
-        JsonGenerator.writeStringField("style","default")
-        JsonGenerator.writeNumberField("width",1920.0)
-        JsonGenerator.writeNumberField("height",1080.0)
-        JsonGenerator.writeEndObject()
-        JsonGenerator.flush()
+        JSON_GENERATOR.writeStartObject()
+        JSON_GENERATOR.writeBooleanField("autoContentsUpdate",false)
+        JSON_GENERATOR.writeBooleanField("autoContentsListImport",false)
+        JSON_GENERATOR.writeBooleanField("fullScreen",false)
+        JSON_GENERATOR.writeBooleanField("offlineMode",false)
+        JSON_GENERATOR.writeStringField("style","default")
+        JSON_GENERATOR.writeNumberField("width",1920.0)
+        JSON_GENERATOR.writeNumberField("height",1080.0)
+        JSON_GENERATOR.writeEndObject()
+        JSON_GENERATOR.flush()
 
+    }
+    
+    fun additionalUrlListInitialize() {
+        JSON_GENERATOR.writeStartArray()
+        JSON_GENERATOR.writeStartObject()
+        JSON_GENERATOR.writeEndObject()
+        JSON_GENERATOR.writeEndArray()
     }
 
     fun otherInitialize() {
 
-        JsonGenerator.writeStartObject()
-        JsonGenerator.writeEndObject()
-        JsonGenerator.flush()
+        JSON_GENERATOR.writeStartObject()
+        JSON_GENERATOR.writeEndObject()
+        JSON_GENERATOR.flush()
 
     }
 }
