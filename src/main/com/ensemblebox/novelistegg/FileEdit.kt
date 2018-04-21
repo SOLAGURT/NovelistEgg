@@ -4,14 +4,7 @@ package main.com.ensemblebox.novelistegg
  * Created by ArcenCiel on 2018/04/02.
  */
 
-import java.io.File
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.PrintWriter
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.io.BufferedReader
-import java.io.BufferedWriter
+import java.io.*
 
 class FileEdit {
 
@@ -41,24 +34,10 @@ class FileEdit {
         }
     }
 
-    fun overWriteFile(filePath: String, contents: String) {
+    fun writeFile(filePath: String, contents: String, addWrite: Boolean = false) {
 
         try {
-            val file = FileWriter(filePath)
-            val pw = PrintWriter(BufferedWriter(file))
-
-            pw.println(contents)
-            pw.close()
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    fun addWriteFile(filePath: String, contents: String) {
-
-        try {
-            val file = FileWriter(filePath, true)
+            val file = FileWriter(filePath, addWrite)
             val pw = PrintWriter(BufferedWriter(file))
 
             pw.println(contents)
