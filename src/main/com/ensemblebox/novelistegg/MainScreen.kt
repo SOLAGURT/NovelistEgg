@@ -22,11 +22,14 @@ class MainScreen: Application() {
                 Scene(
                         FXMLLoader.load<Parent>(
                                 this.javaClass.getResource(
-                                        "/resources/MainScreen.fxml")
+                                        "/resources/MainScreen.fxml.")
                         ),
                         conf.width,
                         conf.height
                 )
+        primaryStage?.setMinHeight(500.0)
+        primaryStage?.setMinWidth(940.0)
+        //primaryStage?.initStyle(StageStyle.UNDECORATED)
         primaryStage?.setFullScreen(conf.fullScreen)
         primaryStage?.show()
     }
@@ -36,7 +39,10 @@ class MainScreen: Application() {
 fun main(args: Array<String>) {
 
     FileCheck().bootFileConfirm()
+    /*
+    additionalURLはGUI内で追加させるためここでの処理をやめる
     FileCheck().addtionalUrlConfirm()
+    */
 
     Application.launch(MainScreen::class.java, *args)
 }
